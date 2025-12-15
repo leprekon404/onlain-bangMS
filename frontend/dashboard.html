@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <title>Онлайн банк</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body class="mobile-dashboard">
+<div class="mobile-shell">
+
+  <!-- HEADER -->
+  <header class="md-header">
+    <div>
+      <div class="md-hello">
+        Привет, <span id="userFirstName">Клиент</span>
+      </div>
+      <div class="md-subtitle">Добро пожаловать в онлайн‑банк</div>
+    </div>
+    <div class="md-header-right">
+      <button class="md-reward-badge">Мои задачи</button>
+      <button class="md-icon-btn" id="logoutBtn">⏻</button>
+    </div>
+  </header>
+
+  <!-- MAIN -->
+  <main class="md-main" id="page-overview">
+
+    <!-- КАРТЫ: КАРУСЕЛЬ -->
+    <section class="md-card-section">
+      <div class="md-card-carousel">
+        <div class="md-card-track" id="cardTrack">
+          <!-- Слайды карт будут отрисованы JS -->
+        </div>
+      </div>
+      <div class="md-card-dots" id="cardDots"></div>
+
+      <div class="md-actions">
+        <div class="md-action">
+          <button class="md-action-btn" id="addMoneyBtn">＋</button>
+          <span class="md-action-text">Пополнить</span>
+        </div>
+        <div class="md-action">
+          <button class="md-action-btn" id="selfTransferBtn">⇄</button>
+          <span class="md-action-text">Между своими</span>
+        </div>
+        <div class="md-action">
+          <button class="md-action-btn" id="sendBtn">⇢</button>
+          <span class="md-action-text">Отправить</span>
+        </div>
+        <div class="md-action">
+          <button class="md-action-btn" id="moreBtn">⋯</button>
+          <span class="md-action-text">Ещё</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- МОИ КАРТЫ И СЧЕТА -->
+    <section class="md-accounts-section">
+      <div class="d-flex justify-content-between align-items-center mb-2">
+        <h6 class="mb-0">Мои карты и счета</h6>
+        <small class="text-muted" id="accountsCountLabel">0 карт</small>
+      </div>
+      <div id="accountsList"></div>
+    </section>
+
+    <!-- ОПЕРАЦИИ -->
+    <section class="md-tx-section">
+      <div class="d-flex justify-content-between align-items-center mb-1">
+        <h6 class="mb-0">Операции</h6>
+        <button class="md-link-button" id="seeAllTxBtn">Смотреть все</button>
+      </div>
+      <div id="txList"></div>
+    </section>
+
+  </main>
+
+  <!-- BOTTOM NAV -->
+  <nav class="md-bottom-nav">
+    <button class="active" id="navOverviewBtn">
+      <span class="md-nav-icon">🏠</span>
+      <span class="md-nav-text">Главная</span>
+    </button>
+    <button id="navCardsBtn">
+      <span class="md-nav-icon">💳</span>
+      <span class="md-nav-text">Карты</span>
+    </button>
+    <div class="md-nav-center">
+      <button class="md-nav-fab" id="navTransferFab">⇄</button>
+    </div>
+    <button id="navHistoryBtn">
+      <span class="md-nav-icon">📜</span>
+      <span class="md-nav-text">История</span>
+    </button>
+    <button id="navLogoutBtn">
+      <span class="md-nav-icon">⏻</span>
+      <span class="md-nav-text">Выход</span>
+    </button>
+  </nav>
+
+</div>
+
+<!-- SHEET: ПЕРЕВОД МЕЖДУ СВОИМИ -->
+<div class="db-sheet-overlay" id="transferSheet">
+  <div class="db-sheet">
+    <div class="db-sheet-header">
+      <div class="db-sheet-title">Перевод между своими счетами</div>
+      <button class="db-sheet-close" data-close-transfer>×</button>
+    </div>
+    <div class="db-sheet-body">
+      <div class="mb-2">
+        <label class="form-label">С какого счёта</label>
+        <select class="form-select" id="transferFrom"></select>
+      </div>
+      <div class="mb-2">
+        <label class="form-label">На какой счёт</label>
+        <select class="form-select" id="transferTo"></select>
+      </div>
+      <div class="mb-2">
+        <label class="form-label">Сумма, ₽</label>
+        <input type="number" class="form-control" id="transferAmount" min="1" step="0.01" />
+      </div>
+      <div class="mb-2">
+        <label class="form-label">Комментарий (необязательно)</label>
+        <input type="text" class="form-control" id="transferComment" />
+      </div>
+      <div class="db-error-text" id="transferError"></div>
+      <button class="btn btn-primary w-100 mt-2" id="transferSubmitBtn">
+        Перевести
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- SHEET: УПРАВЛЕНИЕ КАРТОЙ -->
+<div class="db-sheet-overlay" id="manageSheet">
+  <div class="db-sheet">
+    <div class="db-sheet-header">
+      <div class="db-sheet-title" id="manageTitle">Управление картой</div>
+      <button class="db-sheet-close" data-close-manage>×</button>
+    </div>
+    <div class="db-sheet-body">
+      <div class="mb-2">
+        <label class="form-label">Дневной лимит, ₽ (пусто — без лимита)</label>
+        <input type="number" class="form-control" id="manageLimit" min="0" step="0.01" />
+      </div>
+      <div class="form-check form-switch mb-2">
+        <input class="form-check-input" type="checkbox" id="manageFreeze" />
+        <label class="form-check-label" for="manageFreeze">
+          Временная блокировка карты
+        </label>
+      </div>
+      <button class="btn btn-outline-primary w-100 mb-3" id="manageSaveBtn">
+        Сохранить настройки
+      </button>
+
+      <hr />
+
+      <div class="mb-2">
+        <label class="form-label">Текущий PIN (если уже установлен)</label>
+        <input type="password" class="form-control" id="manageOldPin" />
+      </div>
+      <div class="mb-2">
+        <label class="form-label">Новый PIN</label>
+        <input type="password" class="form-control" id="manageNewPin" />
+      </div>
+      <div class="mb-2">
+        <label class="form-label">Повторите новый PIN</label>
+        <input type="password" class="form-control" id="manageNewPin2" />
+      </div>
+      <div class="db-error-text" id="manageError"></div>
+      <button class="btn btn-primary w-100" id="managePinBtn">
+        Изменить PIN
+      </button>
+    </div>
+  </div>
+</div>
+
+<script src="js/dashboard.js"></script>
+</body>
+</html>

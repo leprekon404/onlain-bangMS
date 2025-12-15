@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Аналитика - Online Banking</title>
+    <link rel="stylesheet" href="/css/mobile-banking.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+    <!-- Шапка -->
+    <header class="app-header">
+        <button onclick="goBack()" class="back-btn">←</button>
+        <h1 class="header-title">Аналитика</h1>
+        <button onclick="exportToJSON()" class="export-btn">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <path d="M10 12L6 8h8l-4 4z" fill="currentColor"/>
+                <path d="M10 2v10M4 16h12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+        </button>
+    </header>
+
+    <div class="app-container">
+        <!-- Фильтр периода -->
+        <div class="period-tabs">
+            <button class="tab-btn" data-period="day">День</button>
+            <button class="tab-btn" data-period="week">Неделя</button>
+            <button class="tab-btn active" data-period="month">Месяц</button>
+            <button class="tab-btn" data-period="year">Год</button>
+        </div>
+
+        <!-- Общая сводка -->
+        <div class="summary-card gradient-card">
+            <div class="summary-header">
+                <h2>Общий баланс</h2>
+                <span class="period-label" id="periodLabel">Текущий месяц</span>
+            </div>
+            <div class="balance-amount" id="totalBalance">0 ₽</div>
+            
+            <div class="stats-grid">
+                <div class="stat-item income">
+                    <span class="stat-icon">↑</span>
+                    <div class="stat-content">
+                        <span class="stat-label">Доходы</span>
+                        <span class="stat-value" id="totalIncome">0 ₽</span>
+                    </div>
+                </div>
+                <div class="stat-item expense">
+                    <span class="stat-icon">↓</span>
+                    <div class="stat-content">
+                        <span class="stat-label">Расходы</span>
+                        <span class="stat-value" id="totalExpense">0 ₽</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- График -->
+        <div class="chart-section">
+            <h3 class="section-title">Динамика по месяцам</h3>
+            <div class="chart-card">
+                <canvas id="trendChart"></canvas>
+            </div>
+        </div>
+
+        <!-- Категории -->
+        <div class="categories-section">
+            <div class="section-header">
+                <h3 class="section-title">Расходы по категориям</h3>
+                <button onclick="showAllCategories()" class="link-btn">Смотреть все</button>
+            </div>
+            <div id="categoriesList" class="categories-list"></div>
+        </div>
+
+        <!-- Последние операции -->
+        <div class="transactions-section">
+            <div class="section-header">
+                <h3 class="section-title">Последние операции</h3>
+                <button onclick="showAllTransactions()" class="link-btn">Смотреть все</button>
+            </div>
+            <div id="transactionsList" class="transactions-list"></div>
+        </div>
+
+        <!-- Бюджеты -->
+        <div class="budgets-section">
+            <div class="section-header">
+                <h3 class="section-title">Бюджеты</h3>
+                <button onclick="showBudgetModal()" class="add-btn">+ Добавить</button>
+            </div>
+            <div id="budgetsList" class="budgets-list"></div>
+        </div>
+
+        <!-- Цели -->
+        <div class="goals-section">
+            <div class="section-header">
+                <h3 class="section-title">Финансовые цели</h3>
+                <button onclick="showGoalModal()" class="add-btn">+ Добавить</button>
+            </div>
+            <div id="goalsList" class="goals-list"></div>
+        </div>
+
+        <div class="bottom-spacer"></div>
+    </div>
+
+    <!-- Нижняя навигация -->
+    <nav class="bottom-nav">
+        <a href="dashboard.html" class="nav-item">
+            <span class="nav-icon">🏠</span>
+            <span class="nav-label">Главная</span>
+        </a>
+        <a href="cards.html" class="nav-item">
+            <span class="nav-icon">💳</span>
+            <span class="nav-label">Карты</span>
+        </a>
+        <a href="#" class="nav-item nav-circle active">
+            <span class="nav-icon-circle">⇄</span>
+        </a>
+        <a href="analytics.html" class="nav-item">
+            <span class="nav-icon">📄</span>
+            <span class="nav-label">История</span>
+        </a>
+        <a href="profile.html" class="nav-item">
+            <span class="nav-icon">👤</span>
+            <span class="nav-label">Выход</span>
+        </a>
+    </nav>
+
+    <!-- Модальное окно бюджета -->
+    <div id="budgetModal" class="modal">
+        <div class="modal-backdrop" onclick="closeBudgetModal()"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Новый бюджет</h2>
+                <button onclick="closeBudgetModal()" class="modal-close">&times;</button>
+            </div>
+            <form id="budgetForm" class="modal-form">
+                <div class="form-field">
+                    <label>Название</label>
+                    <input type="text" id="budgetName" placeholder="Например: Продукты" required>
+                </div>
+                <div class="form-field">
+                    <label>Сумма</label>
+                    <input type="number" id="budgetAmount" placeholder="0" step="0.01" required>
+                </div>
+                <div class="form-field">
+                    <label>Категория</label>
+                    <select id="budgetCategory">
+                        <option value="">Все категории</option>
+                    </select>
+                </div>
+                <div class="form-field">
+                    <label>Период</label>
+                    <select id="budgetPeriod" required>
+                        <option value="daily">Ежедневно</option>
+                        <option value="weekly">Еженедельно</option>
+                        <option value="monthly" selected>Ежемесячно</option>
+                        <option value="yearly">Ежегодно</option>
+                    </select>
+                </div>
+                <div class="form-field">
+                    <label>Дата начала</label>
+                    <input type="date" id="budgetStartDate" required>
+                </div>
+                <button type="submit" class="btn-primary">Создать</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Модальное окно цели -->
+    <div id="goalModal" class="modal">
+        <div class="modal-backdrop" onclick="closeGoalModal()"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Новая цель</h2>
+                <button onclick="closeGoalModal()" class="modal-close">&times;</button>
+            </div>
+            <form id="goalForm" class="modal-form">
+                <div class="form-field">
+                    <label>Название цели</label>
+                    <input type="text" id="goalName" placeholder="Например: Отпуск" required>
+                </div>
+                <div class="form-field">
+                    <label>Описание</label>
+                    <textarea id="goalDescription" placeholder="Описание цели" rows="3"></textarea>
+                </div>
+                <div class="form-field">
+                    <label>Целевая сумма</label>
+                    <input type="number" id="goalAmount" placeholder="0" step="0.01" required>
+                </div>
+                <div class="form-field">
+                    <label>Срок достижения</label>
+                    <input type="date" id="goalDate">
+                </div>
+                <div class="form-field">
+                    <label>Приоритет</label>
+                    <select id="goalPriority">
+                        <option value="low">Низкий</option>
+                        <option value="medium" selected>Средний</option>
+                        <option value="high">Высокий</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn-primary">Добавить</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="/js/analytics-mobile.js"></script>
+    <script src="/js/analytics-export.js"></script>
+</body>
+</html>

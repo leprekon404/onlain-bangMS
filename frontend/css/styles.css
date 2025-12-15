@@ -1,0 +1,450 @@
+:root {
+  --bg-page: #f4f5fb;
+  --card-top: #2563eb;
+  --card-bottom: #7c3aed;
+  --card-shadow: rgba(37, 99, 235, 0.45);
+  --accent: #0ea5e9;
+  --accent-soft: #dbeafe;
+  --text-main: #0f172a;
+  --text-muted: #6b7280;
+  --border-soft: #e5e7eb;
+  --radius-lg: 20px;
+  --radius-md: 14px;
+}
+
+body.mobile-dashboard {
+  background: var(--bg-page);
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+.mobile-shell {
+  max-width: 430px;
+  margin: 0 auto;
+  min-height: 100vh;
+  padding: 16px 12px 72px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Верхняя часть */
+
+.md-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.md-hello {
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.md-subtitle {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.md-header-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.md-reward-badge {
+  border-radius: 999px;
+  border: none;
+  padding: 4px 10px;
+  font-size: 0.75rem;
+  background: #ecfccb;
+  color: #4d7c0f;
+}
+
+.md-icon-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 999px;
+  border: none;
+  background: #ffffff;
+  box-shadow: 0 4px 10px rgba(15, 23, 42, 0.15);
+}
+
+/* Основная область */
+
+.md-main {
+  flex: 1;
+}
+
+/* Карта */
+
+.md-card-section {
+  margin-bottom: 18px;
+}
+
+.md-main-card {
+  position: relative;
+  border-radius: 26px;
+  padding: 20px 18px 18px;
+  color: #ffffff;
+  background: linear-gradient(135deg, var(--card-top), var(--card-bottom));
+  box-shadow: 0 18px 40px var(--card-shadow);
+}
+
+.md-card-balance {
+  font-size: 1.7rem;
+  font-weight: 700;
+}
+
+.md-card-change {
+  font-size: 0.8rem;
+  opacity: 0.9;
+  margin-top: 2px;
+}
+
+.md-card-row {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 14px;
+}
+
+.md-card-details {
+  font-size: 0.8rem;
+}
+
+.md-card-label {
+  opacity: 0.8;
+  margin-bottom: 2px;
+}
+
+.md-card-number,
+.md-card-exp {
+  font-weight: 600;
+}
+
+.md-pill-btn {
+  position: absolute;
+  right: 16px;
+  bottom: 16px;
+  padding: 7px 14px;
+  border-radius: 999px;
+  border: none;
+  background: #111827;
+  color: #f9fafb;
+  font-size: 0.8rem;
+  box-shadow: 0 10px 20px rgba(15, 23, 42, 0.4);
+}
+
+/* Действия */
+
+.md-actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.md-action {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.md-action-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  border: none;
+  background: #ffffff;
+  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.12);
+  font-size: 1.1rem;
+}
+
+.md-action-text {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+/* Мои карты */
+
+.md-accounts-section {
+  margin-bottom: 16px;
+}
+
+.account-item {
+  border-radius: 18px;
+  background: #ffffff;
+  padding: 10px 12px;
+  margin-bottom: 8px;
+  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.06);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}
+
+.account-main {
+  font-size: 0.9rem;
+}
+
+.account-type {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.account-number {
+  font-weight: 600;
+}
+
+.account-balance {
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.account-status {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+}
+
+.account-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.account-btn {
+  border-radius: 999px;
+  border: 1px solid var(--border-soft);
+  padding: 4px 10px;
+  font-size: 0.75rem;
+  background: #f9fafb;
+}
+
+/* Операции */
+
+.md-tx-section {
+  background: #ffffff;
+  border-radius: 22px;
+  padding: 14px 14px 6px;
+  box-shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
+}
+
+.md-link-button {
+  border: none;
+  background: transparent;
+  font-size: 0.8rem;
+  color: var(--accent);
+}
+
+.transaction-item {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--border-soft);
+}
+
+.transaction-item:last-child {
+  border-bottom: none;
+}
+
+.transaction-merchant {
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+
+.transaction-meta {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.transaction-amount {
+  font-weight: 600;
+  font-size: 0.9rem;
+  white-space: nowrap;
+}
+
+.transaction-amount.pos {
+  color: #16a34a;
+}
+
+.transaction-amount.neg {
+  color: #ef4444;
+}
+
+/* Нижняя навигация */
+
+.md-bottom-nav {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  max-width: 430px;
+  margin: 0 auto;
+  padding: 6px 12px 10px;
+  background: #ffffff;
+  border-radius: 24px 24px 0 0;
+  box-shadow: 0 -10px 30px rgba(15, 23, 42, 0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.md-bottom-nav > button {
+  flex: 1;
+  border: none;
+  background: transparent;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.md-bottom-nav > button.active {
+  color: var(--card-top);
+}
+
+.md-nav-icon {
+  font-size: 1.1rem;
+}
+
+.md-nav-text {
+  font-size: 0.7rem;
+}
+
+.md-nav-center {
+  flex: 0;
+}
+
+.md-nav-fab {
+  width: 52px;
+  height: 52px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(circle at 30% 20%, #a855f7, #312e81);
+  color: #f9fafb;
+  font-size: 1.6rem;
+  box-shadow: 0 12px 28px rgba(55, 48, 163, 0.5);
+}
+
+/* Sheets (перевод, управление картой) */
+
+.db-sheet-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.45);
+  display: none;
+  align-items: flex-end;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.db-sheet-overlay.open {
+  display: flex;
+}
+
+.db-sheet {
+  max-width: 430px;
+  width: 100%;
+  background: #f9fafb;
+  border-radius: 24px 24px 0 0;
+  padding: 16px 18px 20px;
+  box-shadow: 0 -16px 40px rgba(15, 23, 42, 0.35);
+  animation: dbSlideUp 0.25s ease-out;
+}
+
+@keyframes dbSlideUp {
+  from { transform: translateY(40px); opacity: 0; }
+  to   { transform: translateY(0); opacity: 1; }
+}
+
+.db-sheet-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.db-sheet-title {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.db-sheet-close {
+  border: none;
+  background: transparent;
+  font-size: 1.2rem;
+}
+
+.db-sheet-body .form-label {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.db-error-text {
+  font-size: 0.8rem;
+  color: #ef4444;
+}
+
+/* Адаптив */
+
+@media (min-width: 768px) {
+  .mobile-shell {
+    margin-top: 24px;
+    margin-bottom: 24px;
+  }
+}
+
+/* Карусель карт */
+
+.md-card-carousel {
+  position: relative;
+  overflow: hidden;
+  padding: 2px 4px;
+}
+
+.md-card-track {
+  display: flex;
+  transition: transform 0.35s ease-in-out;
+  will-change: transform;
+}
+
+.md-card-slide {
+  min-width: 100%;
+  padding: 0 2px;
+  box-sizing: border-box;
+}
+
+.md-card-dots {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  margin: 10px 0 4px;
+}
+
+.md-card-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  border: none;
+  background: rgba(255, 255, 255, 0.5);
+  padding: 0;
+}
+
+.md-card-dot.active {
+  width: 18px;
+  background: #ffffff;
+}
+
+/* Подсветка активного счета в списке */
+
+.account-item.active {
+  outline: 2px solid var(--card-top);
+  outline-offset: 2px;
+}

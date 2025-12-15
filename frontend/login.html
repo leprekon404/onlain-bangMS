@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Онлайн банк — вход и регистрация</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+    rel="stylesheet">
+  <style>
+    :root {
+      --bg-page: #f5f6fb;
+      --card-bg: #f5f6fb;
+      --primary-dark: #111827;
+      --accent-red: #e53935;
+      --text-main: #111827;
+      --text-muted: #6b7280;
+    }
+
+    body.welcome-body {
+      min-height: 100vh;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--bg-page);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    .welcome-shell {
+      max-width: 430px;
+      width: 100%;
+      margin: 40px auto;
+      background: #000;
+      border-radius: 40px;
+      padding: 10px 8px 20px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.45);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .welcome-inner {
+      flex: 1;
+      border-radius: 32px;
+      background: var(--card-bg);
+      padding: 20px 20px 28px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .welcome-top-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+
+    .welcome-menu {
+      font-size: 1.4rem;
+      cursor: pointer;
+    }
+
+    .welcome-app-name {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text-main);
+    }
+
+    .welcome-text {
+      margin-top: 24px;
+    }
+
+    .welcome-title {
+      font-size: 1.7rem;
+      font-weight: 600;
+      color: #374151;
+      line-height: 1.25;
+    }
+
+    .welcome-subtitle {
+      margin-top: 14px;
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      max-width: 260px;
+    }
+
+    .welcome-actions {
+      margin-top: 220px;
+      margin-bottom: 4px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .welcome-inner-spacer {
+      flex: 1;
+    }
+
+    .btn-login-main {
+      border-radius: 18px;
+      background: var(--primary-dark);
+      color: #f9fafb;
+      border: none;
+      padding: 14px 18px;
+      font-size: 1rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      box-shadow: 0 14px 30px rgba(15,23,42,0.45);
+    }
+
+    .btn-login-main-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 16px;
+      background: #1f2933;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+    }
+
+    .btn-register-main {
+      border-radius: 18px;
+      border: none;
+      padding: 14px 18px;
+      font-size: 1rem;
+      font-weight: 600;
+      background: var(--accent-red);
+      color: #fff;
+      box-shadow: 0 16px 40px rgba(229,57,53,0.6);
+    }
+
+    .welcome-hint {
+      font-size: 0.75rem;
+      color: #9ca3af;
+      text-align: center;
+      margin-top: 2px;
+    }
+
+    /* bottom‑sheet */
+
+    .sheet-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(15,23,42,0.45);
+      display: none;
+      align-items: flex-end;
+      justify-content: center;
+      z-index: 1000;
+    }
+
+    .sheet-overlay.open {
+      display: flex;
+    }
+
+    .sheet {
+      max-width: 430px;
+      width: 100%;
+      background: #f9fafb;
+      border-radius: 24px 24px 0 0;
+      padding: 16px 18px 20px;
+      box-shadow: 0 -16px 40px rgba(15,23,42,0.35);
+      animation: slideUp 0.25s ease-out;
+    }
+
+    @keyframes slideUp {
+      from { transform: translateY(40px); opacity: 0; }
+      to   { transform: translateY(0); opacity: 1; }
+    }
+
+    .sheet-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .sheet-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+    }
+
+    .sheet-close {
+      border: none;
+      background: transparent;
+      font-size: 1.2rem;
+    }
+
+    .sheet-body {
+      font-size: 0.9rem;
+    }
+
+    .sheet-body .form-label {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    .sheet-body .form-control {
+      border-radius: 999px;
+    }
+
+    .sheet-body .btn-primary {
+      border-radius: 999px;
+      background: var(--primary-dark);
+      border: none;
+      font-weight: 600;
+    }
+
+    .error-text {
+      font-size: 0.8rem;
+      color: #ef4444;
+      margin-top: 4px;
+    }
+
+    /* Поле с кнопкой показа пароля */
+    .password-wrapper {
+      position: relative;
+    }
+
+    .password-toggle {
+      position: absolute;
+      right: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      font-size: 1.2rem;
+      color: var(--text-muted);
+      padding: 0;
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: color 0.2s;
+    }
+
+    .password-toggle:hover {
+      color: var(--text-main);
+    }
+
+    .password-wrapper .form-control {
+      padding-right: 48px;
+    }
+
+    @media (max-width: 480px) {
+      .welcome-shell {
+        margin: 20px auto;
+      }
+      .welcome-title {
+        font-size: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body class="welcome-body">
+<div class="welcome-shell">
+  <div class="welcome-inner">
+    <div class="welcome-top-row">
+      <div class="welcome-menu">≡</div>
+      <div class="welcome-app-name"></div>
+    </div>
+
+    <div class="welcome-text">
+      <div class="welcome-title">
+        Добро пожаловать<br>
+        в новый онлайн‑банк
+      </div>
+      <div class="welcome-subtitle">
+        Удобный доступ к счетам, картам и переводам в одном приложении.
+      </div>
+    </div>
+
+    <div class="welcome-inner-spacer"></div>
+
+    <div class="welcome-actions">
+      <button id="openLoginBtn" class="btn-login-main" type="button">
+        <span>Войти</span>
+        <span class="btn-login-main-icon">🔒</span>
+      </button>
+      <button id="openRegisterBtn" class="btn-register-main" type="button">
+        Стать клиентом
+      </button>
+      <div class="welcome-hint">
+        Вся информация шифруется и передаётся по защищённому каналу.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Вход -->
+<div id="loginSheetOverlay" class="sheet-overlay">
+  <div class="sheet">
+    <div class="sheet-header">
+      <div class="sheet-title">Вход в онлайн‑банк</div>
+      <button class="sheet-close" type="button" data-close-sheet="login">×</button>
+    </div>
+    <div class="sheet-body">
+      <div class="mb-2 text-muted" style="font-size:0.85rem;">
+        Введите логин и пароль, указанные при регистрации.
+      </div>
+      <form id="loginForm">
+        <div class="mb-3">
+          <label class="form-label">Логин</label>
+          <input id="loginUsername" class="form-control" autocomplete="username" required>
+        </div>
+        <div class="mb-1">
+          <label class="form-label">Пароль</label>
+          <div class="password-wrapper">
+            <input id="loginPassword" type="password" class="form-control"
+                   autocomplete="current-password" required>
+            <button type="button" class="password-toggle" onclick="togglePassword('loginPassword')">
+              👁️
+            </button>
+          </div>
+        </div>
+        <div id="loginError" class="error-text"></div>
+        <button class="btn btn-primary w-100 mt-2" type="submit">Войти</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Регистрация -->
+<div id="registerSheetOverlay" class="sheet-overlay">
+  <div class="sheet">
+    <div class="sheet-header">
+      <div class="sheet-title">Регистрация клиента</div>
+      <button class="sheet-close" type="button" data-close-sheet="register">×</button>
+    </div>
+    <div class="sheet-body">
+      <div class="mb-2 text-muted" style="font-size:0.85rem;">
+        Заполните данные, чтобы создать учётную запись.
+      </div>
+      <form id="registerForm">
+        <div class="mb-2">
+          <label class="form-label">Логин</label>
+          <input id="regUsername" class="form-control" required>
+        </div>
+        <div class="mb-2">
+          <label class="form-label">E‑mail</label>
+          <input id="regEmail" type="email" class="form-control" required>
+        </div>
+        <div class="mb-2">
+          <label class="form-label">ФИО</label>
+          <input id="regFullName" class="form-control" placeholder="Иванов Иван Иванович">
+        </div>
+        <div class="mb-2">
+          <label class="form-label">Телефон</label>
+          <input id="regPhone" class="form-control" placeholder="+7 900 000‑ 00‑00">
+        </div>
+        <div class="mb-2">
+          <label class="form-label">Пароль</label>
+          <div class="password-wrapper">
+            <input id="regPassword" type="password" class="form-control" required>
+            <button type="button" class="password-toggle" onclick="togglePassword('regPassword')">
+              👁️
+            </button>
+          </div>
+        </div>
+        <div class="mb-1">
+          <label class="form-label">Повторите пароль</label>
+          <div class="password-wrapper">
+            <input id="regPassword2" type="password" class="form-control" required>
+            <button type="button" class="password-toggle" onclick="togglePassword('regPassword2')">
+              👁️
+            </button>
+          </div>
+        </div>
+        <div id="registerError" class="error-text"></div>
+        <button class="btn btn-primary w-100 mt-2" type="submit">Зарегистрироваться</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+  const API = '/api';
+
+  const openLoginBtn = document.getElementById('openLoginBtn');
+  const openRegisterBtn = document.getElementById('openRegisterBtn');
+  const loginOverlay = document.getElementById('loginSheetOverlay');
+  const registerOverlay = document.getElementById('registerSheetOverlay');
+
+  function openSheet(which) {
+    if (which === 'login') loginOverlay.classList.add('open');
+    if (which === 'register') registerOverlay.classList.add('open');
+  }
+
+  function closeSheet(which) {
+    if (which === 'login') loginOverlay.classList.remove('open');
+    if (which === 'register') registerOverlay.classList.remove('open');
+  }
+
+  openLoginBtn.onclick = () => openSheet('login');
+  openRegisterBtn.onclick = () => openSheet('register');
+
+  document.querySelectorAll('.sheet-close').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const which = btn.getAttribute('data-close-sheet');
+      closeSheet(which);
+    });
+  });
+
+  [loginOverlay, registerOverlay].forEach(ov => {
+    ov.addEventListener('click', e => {
+      if (e.target === ov) {
+        ov.classList.remove('open');
+      }
+    });
+  });
+
+  // Функция показа/скрытия пароля
+  function togglePassword(inputId) {
+    const input = document.getElementById(inputId);
+    const button = input.nextElementSibling;
+    
+    if (input.type === 'password') {
+      input.type = 'text';
+      button.textContent = '🙈'; // Обезьянка закрыла глаза
+    } else {
+      input.type = 'password';
+      button.textContent = '👁️'; // Глаз
+    }
+  }
+
+  document.getElementById('loginForm').addEventListener('submit', async e => {
+    e.preventDefault();
+    const username = document.getElementById('loginUsername').value.trim();
+    const password = document.getElementById('loginPassword').value;
+    const err = document.getElementById('loginError');
+    err.textContent = '';
+
+    try {
+      const res = await fetch(API + '/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, password })
+      });
+      const data = await res.json();
+      if (!data.success) {
+        err.textContent = data.message || 'Неверный логин или пароль';
+        return;
+      }
+      localStorage.setItem('token', data.token);
+      localStorage.setItem('user', JSON.stringify(data.user));
+      location.href = 'dashboard.html';
+    } catch {
+      err.textContent = 'Ошибка соединения с сервером';
+    }
+  });
+
+  document.getElementById('registerForm').addEventListener('submit', async e => {
+    e.preventDefault();
+    const username = document.getElementById('regUsername').value.trim();
+    const email = document.getElementById('regEmail').value.trim();
+    const fullName = document.getElementById('regFullName').value.trim();
+    const phoneNumber = document.getElementById('regPhone').value.trim();
+    const password = document.getElementById('regPassword').value;
+    const password2 = document.getElementById('regPassword2').value;
+    const err = document.getElementById('registerError');
+    err.textContent = '';
+
+    if (password !== password2) {
+      err.textContent = 'Пароли не совпадают';
+      return;
+    }
+
+    try {
+      const res = await fetch(API + '/auth/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, email, fullName, phoneNumber, password })
+      });
+      const data = await res.json();
+      if (!data.success) {
+        err.textContent = data.message || 'Ошибка регистрации';
+        return;
+      }
+      localStorage.setItem('token', data.token);
+      localStorage.setItem('user', JSON.stringify(data.user));
+      location.href = 'dashboard.html';
+    } catch {
+      err.textContent = 'Ошибка соединения с сервером';
+    }
+  });
+</script>
+</body>
+</html>

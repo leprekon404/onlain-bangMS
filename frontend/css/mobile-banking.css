@@ -1,0 +1,652 @@
+/* ==============================================
+   МОБИЛЬНЫЙ БАНКИНГ - СТИЛИ
+============================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    background: #f5f7fa;
+    color: #1a202c;
+    overflow-x: hidden;
+}
+
+/* ==============================================
+   ШАПКА
+============================================== */
+
+.app-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 56px;
+    background: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 16px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    z-index: 100;
+}
+
+.back-btn, .export-btn {
+    width: 40px;
+    height: 40px;
+    border: none;
+    background: transparent;
+    font-size: 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: background 0.2s;
+}
+
+.back-btn:active, .export-btn:active {
+    background: #f0f0f0;
+}
+
+.header-title {
+    font-size: 18px;
+    font-weight: 600;
+}
+
+/* ==============================================
+   КОНТЕЙНЕР
+============================================== */
+
+.app-container {
+    padding: 72px 16px 80px;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* ==============================================
+   ФИЛЬТР ПЕРИОДА
+============================================== */
+
+.period-tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 20px;
+    background: white;
+    padding: 4px;
+    border-radius: 12px;
+}
+
+.tab-btn {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    background: transparent;
+    font-size: 14px;
+    font-weight: 500;
+    color: #718096;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.tab-btn.active {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+}
+
+/* ==============================================
+   СВОДКА (ГРАДИЕНТНАЯ КАРТОЧКА)
+============================================== */
+
+.summary-card {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 20px;
+    padding: 24px;
+    color: white;
+    margin-bottom: 24px;
+    box-shadow: 0 8px 16px rgba(102, 126, 234, 0.3);
+}
+
+.summary-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.summary-header h2 {
+    font-size: 14px;
+    font-weight: 500;
+    opacity: 0.9;
+}
+
+.period-label {
+    font-size: 12px;
+    opacity: 0.8;
+}
+
+.balance-amount {
+    font-size: 36px;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.stat-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: rgba(255,255,255,0.15);
+    padding: 12px;
+    border-radius: 12px;
+}
+
+.stat-icon {
+    width: 32px;
+    height: 32px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+}
+
+.stat-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.stat-label {
+    font-size: 11px;
+    opacity: 0.8;
+}
+
+.stat-value {
+    font-size: 16px;
+    font-weight: 600;
+}
+
+/* ==============================================
+   СЕКЦИИ
+============================================== */
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.section-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #1a202c;
+}
+
+.link-btn {
+    background: none;
+    border: none;
+    color: #667eea;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.add-btn {
+    background: none;
+    border: none;
+    color: #667eea;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+/* ==============================================
+   ГРАФИК
+============================================== */
+
+.chart-section {
+    margin-bottom: 32px;
+}
+
+.chart-card {
+    background: white;
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.chart-card canvas {
+    max-height: 200px;
+}
+
+/* ==============================================
+   КАТЕГОРИИ
+============================================== */
+
+.categories-section {
+    margin-bottom: 32px;
+}
+
+.categories-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.category-card {
+    background: white;
+    border-radius: 16px;
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.category-icon {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    border-radius: 12px;
+}
+
+.category-info {
+    flex: 1;
+}
+
+.category-name {
+    font-size: 15px;
+    font-weight: 600;
+    color: #1a202c;
+    margin-bottom: 4px;
+}
+
+.category-count {
+    font-size: 13px;
+    color: #718096;
+}
+
+.category-bar {
+    height: 4px;
+    background: #e2e8f0;
+    border-radius: 2px;
+    margin-top: 8px;
+    overflow: hidden;
+}
+
+.category-bar-fill {
+    height: 100%;
+    border-radius: 2px;
+    transition: width 0.5s ease;
+}
+
+.category-amount {
+    text-align: right;
+}
+
+.amount-value {
+    font-size: 16px;
+    font-weight: 600;
+    color: #1a202c;
+}
+
+.amount-percent {
+    font-size: 12px;
+    color: #718096;
+}
+
+/* ==============================================
+   ОПЕРАЦИИ / ТРАНЗАКЦИИ
+============================================== */
+
+.transactions-section {
+    margin-bottom: 32px;
+}
+
+.transactions-list {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.transaction-item {
+    background: white;
+    padding: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 12px;
+    margin-bottom: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.transaction-info {
+    flex: 1;
+}
+
+.transaction-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: #1a202c;
+    margin-bottom: 4px;
+}
+
+.transaction-date {
+    font-size: 13px;
+    color: #718096;
+}
+
+.transaction-amount {
+    font-size: 16px;
+    font-weight: 600;
+    text-align: right;
+}
+
+.transaction-amount.income {
+    color: #48bb78;
+}
+
+.transaction-amount.expense {
+    color: #f56565;
+}
+
+.transaction-amount.transfer {
+    color: #718096;
+}
+
+/* ==============================================
+   БЮДЖЕТЫ И ЦЕЛИ
+============================================== */
+
+.budgets-section, .goals-section {
+    margin-bottom: 32px;
+}
+
+.budgets-list, .goals-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.budget-card, .goal-card {
+    background: white;
+    border-radius: 16px;
+    padding: 16px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.budget-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.budget-name {
+    font-size: 15px;
+    font-weight: 600;
+    color: #1a202c;
+}
+
+.budget-period {
+    font-size: 12px;
+    color: #718096;
+    background: #f7fafc;
+    padding: 4px 10px;
+    border-radius: 12px;
+}
+
+.progress-wrapper {
+    margin-top: 8px;
+}
+
+.progress-bar {
+    height: 6px;
+    background: #e2e8f0;
+    border-radius: 3px;
+    overflow: hidden;
+    margin-bottom: 8px;
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #48bb78 0%, #38a169 100%);
+    border-radius: 3px;
+    transition: width 0.5s ease;
+}
+
+.progress-fill.warning {
+    background: linear-gradient(90deg, #ed8936 0%, #dd6b20 100%);
+}
+
+.progress-fill.danger {
+    background: linear-gradient(90deg, #f56565 0%, #e53e3e 100%);
+}
+
+.progress-info {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    color: #718096;
+}
+
+.empty-state {
+    text-align: center;
+    padding: 40px 20px;
+    color: #a0aec0;
+    font-size: 14px;
+}
+
+/* ==============================================
+   МОДАЛЬНЫЕ ОКНА
+============================================== */
+
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1000;
+}
+
+.modal.active {
+    display: block;
+}
+
+.modal-backdrop {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.5);
+}
+
+.modal-content {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: white;
+    border-radius: 20px 20px 0 0;
+    padding: 24px;
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+.modal-header h2 {
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.modal-close {
+    width: 32px;
+    height: 32px;
+    border: none;
+    background: #f7fafc;
+    border-radius: 50%;
+    font-size: 24px;
+    color: #718096;
+    cursor: pointer;
+}
+
+.modal-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.form-field {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.form-field label {
+    font-size: 14px;
+    font-weight: 500;
+    color: #4a5568;
+}
+
+.form-field input,
+.form-field select,
+.form-field textarea {
+    padding: 12px 16px;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    font-size: 15px;
+    font-family: inherit;
+    transition: border-color 0.2s;
+}
+
+.form-field input:focus,
+.form-field select:focus,
+.form-field textarea:focus {
+    outline: none;
+    border-color: #667eea;
+}
+
+.btn-primary {
+    width: 100%;
+    padding: 14px;
+    border: none;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 12px;
+    cursor: pointer;
+    margin-top: 8px;
+}
+
+.btn-primary:active {
+    transform: scale(0.98);
+}
+
+/* ==============================================
+   НИЖНЯЯ НАВИГАЦИЯ
+============================================== */
+
+.bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 70px;
+    background: white;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    box-shadow: 0 -2px 10px rgba(0,0,0,0.08);
+    z-index: 100;
+}
+
+.nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    text-decoration: none;
+    color: #a0aec0;
+    padding: 8px 12px;
+    border-radius: 12px;
+    transition: all 0.2s;
+}
+
+.nav-item.active {
+    color: #667eea;
+}
+
+.nav-item.nav-circle {
+    position: relative;
+    top: -20px;
+}
+
+.nav-icon {
+    font-size: 22px;
+}
+
+.nav-icon-circle {
+    width: 56px;
+    height: 56px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    color: white;
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
+
+.nav-label {
+    font-size: 11px;
+    font-weight: 500;
+}
+
+/* ==============================================
+   УТИЛИТЫ
+============================================== */
+
+.bottom-spacer {
+    height: 40px;
+}
+
+/* Анимация появления */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.category-card, .budget-card, .goal-card, .transaction-item {
+    animation: fadeIn 0.3s ease;
+}
